@@ -1,0 +1,7 @@
+<h2>Agregado Recientemente</h2>
+<div>
+    <!--Loop entre todos los libros de la página-->
+    <% books.forEach(book =>  { %>
+        <img height="150" width="100" src="<%= book.coverImagePath %>">
+    <% }) %>
+    </div>

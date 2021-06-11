@@ -1,0 +1,26 @@
+<h2>Buscar Libros</h2>
+<form action="/books" method="GET">
+    <div>
+        <label>Título</label>
+        <input type="text" name="title" value="<%= searchOptions.title %>">
+    </div>
+
+    <div>
+        <label>Publicado Despúes</label>
+        <input type="date" name="publishedAfter" value="<%= searchOptions.publishedAfter %>">
+    </div>
+
+    <div>
+        <label>Publicado Antes</label>
+        <input type="date" name="publishedBefore" value="<%= searchOptions.publishedBefore %>">
+    </div>
+
+    <button type="submit">Buscar</button>
+</form>
+<br>
+<div>
+<!--Loop entre todos los libros de la página-->
+<% books.forEach(book =>  { %>
+    <img height="150" width="100" src="<%= book.coverImagePath %>">
+<% }) %>
+</div>
