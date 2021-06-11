@@ -1,19 +1,9 @@
 const express = require('express')
 const router = express.Router()
-const multer = require('multer')
-const path = require('path')
-const fs = require('fs')
-const imageMimeTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif']
 const Book = require('../models/book')
 const Author = require('../models/author')
-const uploadPath = path.join('public', Book.coverImageBasePath)
-const { param } = require('./authors')
-const upload = multer({
-    dest: uploadPath,
-    fileFilter: (req, file, callback) => {
-        callback(null, imageMimeTypes.includes(file.mimetype))
-    }
-})
+const imageMimeTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif']
+
 
 // Todos los libros route
 router.get('/', async (req, res) => {
@@ -47,7 +37,7 @@ router.get('/new', async (req, res) => {
 })
 
 // Crear libro route
-router.post('/', upload.single('cover'), async (req, res) => {
+router.post('/', async (req, res) => {
     //Si el filename es nullo
     const fileName = req.file != null ? req.file.filename : null
     //Si el file name no es nulo entonces crea un nuevo Libro
@@ -56,9 +46,10 @@ router.post('/', upload.single('cover'), async (req, res) => {
         author: req.body.author,
         publishDate: new Date(req.body.publishDate),
         pageCount: parseInt(req.body.pageCount),
-        coverImageName: fileName,
         description: req.body.description
     })
+    saveCover(book, req.body.cover)
+
     try {
         //Guardamos en mongodb el libro creado
         const newBook = await book.save()
@@ -66,19 +57,21 @@ router.post('/', upload.single('cover'), async (req, res) => {
         //Redirigimos a todos los libros luego de crear el libro
         res.redirect('books')
     } catch {
-        // Para manejar errores => si la cover image es distinta de null
-        if(book.coverImageName != null) {
-            removeBookCover(book.coverImageName)
-        }
         renderNewPage(res, book, true)
     }
 })
 
-function removeBookCover(fileName) {
-    //Removemos el file que no queremos en nuestro server => por si hay un error al crear el libro
-    fs.unlink(path.join(uploadPath, fileName), err => {
-        if (err) console.err(err)
-    })
+//Función para guardar la img de la portada
+function saveCover(book, coverEncoded) {
+    //Checkeamos si el cover es un cover válido
+    if(coverEncoded == null) return
+    //Parseamos a JSON
+    const cover = JSON.parse(coverEncoded)
+    //Si el cover es distinto de null y si es del tipo correcto
+    if(cover != null && imageMimeTypes.includes(cover.type)) {
+        book.coverImage = new Buffer.from(cover.data, 'base64')
+        book.coverImageType = cover.type
+    }
 }
 
 //Para renderizar una nueva página => hacemos esto para limpiar mejor el código
