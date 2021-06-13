@@ -69,7 +69,7 @@ router.get('/:id/edit', async (req, res) => {
     
 })
 
-//Actualizar autor
+//Actualizar autor put
 router.put('/:id', async (req, res) => {
     let author 
     try {
