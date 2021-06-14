@@ -1,4 +1,4 @@
-<h2>Buscar autores</h2>
+<h2 class="page-header">Buscar autores</h2>
 <form action="/authors" method="GET">
     <label>Nombre</label>
     <input type="texy" name="name" value="<%= searchOptions.name %>">
@@ -8,7 +8,9 @@
 <!--Loop entre todos los autores de la página-->
 <% authors.forEach(author =>  { %>
     <div><%= author.name %></div>
-    <a href="/authors/<%= author.id %>">Ver</a>
-    <a href="/authors/<%= author.id %>/edit">Editar</a>
+    <div class="btn-row">
+        <a class="btn btn-primary" href="/authors/<%= author.id %>">Ver</a>
+        <a class="btn btn-primary" href="/authors/<%= author.id %>/edit">Editar</a>
     <%- include('../partials/deleteForm', { url: `/authors/${author.id}` }) %>
+    </div>
 <% }) %>
