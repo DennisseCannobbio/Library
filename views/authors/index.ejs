@@ -1,8 +1,14 @@
 <h2 class="page-header">Buscar autores</h2>
 <form action="/authors" method="GET">
-    <label>Nombre</label>
-    <input type="texy" name="name" value="<%= searchOptions.name %>">
-    <button type="submit">Buscar</button>
+    <div class="form-row">
+        <div class="form-item">
+            <label>Nombre</label>
+            <input type="texy" name="name" value="<%= searchOptions.name %>">
+        </div>
+    </div>
+    <div class="form-row form-row-end">
+        <button class="btn btn-primary" type="submit">Buscar</button>
+    </div>
 </form>
 <br>
 <!--Loop entre todos los autores de la página-->

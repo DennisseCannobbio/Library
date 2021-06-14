@@ -1,9 +1,11 @@
 <h2 class="page-header"><%= author.name %></h2>
-<a href="/authors/<%= author.edit %>/edit">Editar</a>
-<%- include('../partials/deleteForm', { url: `/authors/${author.id}` }) %>
+<div class="btn-row">
+    <a class="btn btn-primary" href="/authors/<%= author.edit %>/edit">Editar</a>
+    <%- include('../partials/deleteForm', { url: `/authors/${author.id}` }) %>
+</div>
 <!--Si hay libros del autor los muestra-->
 <% if (booksByAuthor.length > 0 )  { %>
-    <h2>Libros del autor</h2>
+    <h2 class="page-header">Libros del autor</h2>
     <!--Loop entre todos los libros de la página-->
     <% booksByAuthor.forEach(book =>  { %>
         <a href="/books/<%= book.id %>">
