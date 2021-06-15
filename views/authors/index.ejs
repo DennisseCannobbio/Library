@@ -13,10 +13,12 @@
 <br>
 <!--Loop entre todos los autores de la página-->
 <% authors.forEach(author =>  { %>
-    <div><%= author.name %></div>
-    <div class="btn-row">
-        <a class="btn btn-primary" href="/authors/<%= author.id %>">Ver</a>
-        <a class="btn btn-primary" href="/authors/<%= author.id %>/edit">Editar</a>
-    <%- include('../partials/deleteForm', { url: `/authors/${author.id}` }) %>
+    <div class="author-row">
+        <div class="author-name"><%= author.name %></div>
+        <div class="btn-row">
+            <a class="btn btn-primary" href="/authors/<%= author.id %>">Ver</a>
+            <a class="btn btn-primary" href="/authors/<%= author.id %>/edit">Editar</a>
+            <%- include('../partials/deleteForm', { url: `/authors/${author.id}` }) %>
+        </div>
     </div>
 <% }) %>

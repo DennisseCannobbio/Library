@@ -1,9 +1,5 @@
 <h2 class="page-header">Agregado Recientemente</h2>
 <div>
     <!--Loop entre todos los libros de la página-->
-    <% books.forEach(book =>  { %>
-        <a href="/books/<%= book.id %>">
-        <img height="150" width="100" src="<%= book.coverImagePath %>">
-        </a>
-    <% }) %>
+    <%- include('partials/bookGrid', { books: books, large: true }) %>
     </div>

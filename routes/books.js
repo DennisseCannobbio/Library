@@ -164,9 +164,9 @@ async function renderFormPage(res, book, form, hasError = false) {
         // Si existe error
         if (hasError) {
             if (form === 'edit') {
-                params.errorMessage = 'Error Updating Book'
+                params.errorMessage = 'Error al actualizar el libro'
             } else {
-                params.errorMessage = 'Error Creating Book'
+                params.errorMessage = 'Error al crear el libro'
             }
         }
         //Renderiza la página
@@ -179,11 +179,11 @@ async function renderFormPage(res, book, form, hasError = false) {
 
 //Función para guardar la img de la portada
 function saveCover(book, coverEncoded) {
-    //Checkeamos si el cover es un cover válido
-    if (coverEncoded == null) return
+    //Checkeamos si el cover es un cover válido ====> ACÁ SE CAE SI NO INSERTAMOS UNA IMAGEN
+    if (coverEncoded == null) return 
     //Parseamos a JSON
     const cover = JSON.parse(coverEncoded)
-    // Si el cover es distinto de null u si es del tipo correcto
+    // Si el cover es distinto de null y si es del tipo correcto
     if (cover != null && imageMimeTypes.includes(cover.type)) {
         book.coverImage = new Buffer.from(cover.data, 'base64')
         book.coverImageType = cover.type
